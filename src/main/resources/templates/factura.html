@@ -28,25 +28,26 @@
                         </form>
                         <form class="row" th:object="${detalle}" th:action="@{/busqueda}"  method="POST">
                             <input type="text" th:field="*{id}" class="form-control" hidden>                            
+                            <input type="text" th:field="*{codigoA}" class="form-control" hidden>                            
                             <div class="form-group">
                                 <label for="descripcion">descripcion</label>
                                 <input type="text" th:field="*{descripcion}" class="form-control">
                             </div>
                             <div class="form-check">
                                 <label for="precio1" th:text=${detalle.precio1}>x</label>
-                                <input type="radio" name="eleccion" class="form-control" value="option1">
+                                <input type="radio" name="eleccion" class="form-control" th:value="${detalle.precio1}">
                             </div>
                             <div class="form-check">
                                 <label for="precio2" th:text=${detalle.precio2}>precio2</label>
-                                <input type="radio" name="eleccion" class="form-control" value="option2">
+                                <input type="radio" name="eleccion" class="form-control" th:value="${detalle.precio2}">
                             </div>
                             <div class="form-check">
                                 <label for="precio3" th:text=${detalle.precio3}>precio3</label>
-                                <input type="radio" name="eleccion" class="form-control" value="option3">
+                                <input type="radio" name="eleccion" class="form-control" th:value="${detalle.precio3}">
                             </div>
                             <div class="form-check">
                                 <label for="precio4" th:text=${detalle.precio4}>precio3</label>
-                                <input type="radio" name="eleccion" class="form-control" value="option4">
+                                <input type="radio" name="eleccion" class="form-control" th:value="${detalle.precio4}">
                             </div>
                             <div class="form-group">
                                 <label for="cantidad">cantidad</label>
@@ -60,7 +61,37 @@
                 </div>
             </div>
         </section>
+        <!-- factura detalle -->
+        <div class="container-fluid mt-3">
+            <table class="table table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Descripcion</th>
+                        <th>Cantidad</th>
+                        <th>Precio</th>
+                        <th>Total</th>
+                        <th>Borrar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="producto,iterador: ${session.carrito}">
+                        <td th:text="${producto.codigoA}" class="form-control-lg"></td>
+                        <td th:text="${producto.descripcion}" class="form-control-lg"></td>
+                        <td th:text="${producto.eleccion}" class="form-control-lg"></td>
+                        <td th:text="${producto.cantidad}" class="form-control-lg"></td>
+                        <td th:text="${producto.total}" class="form-control-lg"></td>
+                        <td>
+                            <a th:href="@{/factura/detalle_borrar(id=${iterador.index})}"
+                                class="btn btn-danger btn-lg">Quitar</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>       
     </div>
+
+
 
 </body>
 
